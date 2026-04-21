@@ -1,0 +1,24 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        // Use hash sets to track seen numbers in rows, columns, and boxes
+        java.util.HashSet<String> seen = new java.util.HashSet<>();
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                char num = board[i][j];
+                if (num != '.') {
+                    // Encode the constraints
+                    String rowKey = num + " in row " + i;
+                    String colKey = num + " in col " + j;
+                    String boxKey = num + " in box " + (i / 3) + "-" + (j / 3);
+
+                    // If any constraint is violated, return false
+                    if (!seen.add(rowKey) || !seen.add(colKey) || !seen.add(boxKey)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
