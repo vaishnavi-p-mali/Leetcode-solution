@@ -1,0 +1,35 @@
+class Solution {
+    public String countAndSay(int n) {
+        // Base case
+        if (n == 1) return "1";
+
+        // Start from "1" and build up to n
+        String result = "1";
+
+        for (int i = 2; i <= n; i++) {
+            result = buildNext(result);
+        }
+
+        return result;
+    }
+
+    // Helper method to generate the next sequence using run-length encoding
+    private String buildNext(String s) {
+        StringBuilder sb = new StringBuilder();
+        int count = 1;
+
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == s.charAt(i - 1)) {
+                count++; // consecutive identical characters
+            } else {
+                sb.append(count).append(s.charAt(i - 1)); // encode run
+                count = 1; // reset count
+            }
+        }
+
+        // Append the last run
+        sb.append(count).append(s.charAt(s.length() - 1));
+
+        return sb.toString();
+    }
+}
