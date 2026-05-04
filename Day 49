@@ -1,0 +1,22 @@
+import java.util.*;
+
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if (strs == null || strs.length == 0) return new ArrayList<>();
+        
+        Map<String, List<String>> map = new HashMap<>();
+        
+        for (String s : strs) {
+            // Sort the characters of the string to form the key
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            
+            // Add the string to the corresponding group
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(s);
+        }
+        
+        // Return all grouped anagrams
+        return new ArrayList<>(map.values());
+    }
+}
