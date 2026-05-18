@@ -1,0 +1,19 @@
+class Solution {
+    public int uniquePaths(int m, int n) {
+        // The robot needs to make (m-1) moves down and (n-1) moves right
+        // Total moves = (m-1) + (n-1) = m + n - 2
+        // We need to choose (m-1) moves (or equivalently (n-1) moves)
+        // So the answer is C(m+n-2, m-1)
+
+        long result = 1;
+        int totalMoves = m + n - 2;
+        int downMoves = m - 1;
+
+        // Compute binomial coefficient C(totalMoves, downMoves)
+        for (int i = 1; i <= downMoves; i++) {
+            result = result * (totalMoves - downMoves + i) / i;
+        }
+
+        return (int) result;
+    }
+}
