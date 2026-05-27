@@ -1,0 +1,36 @@
+import java.util.*;
+
+class Solution {
+    public String simplifyPath(String path) {
+        // Split the path by "/" to get components
+        String[] parts = path.split("/");
+        Deque<String> stack = new ArrayDeque<>();
+        
+        for (String part : parts) {
+            if (part.equals("") || part.equals(".")) {
+                // Skip empty or current directory
+                continue;
+            } else if (part.equals("..")) {
+                // Go up one directory if possible
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
+            } else {
+                // Valid directory/file name
+                stack.push(part);
+            }
+        }
+        
+        // Build the canonical path
+        StringBuilder result = new StringBuilder();
+        if (stack.isEmpty()) {
+            return "/";
+        }
+        
+        while (!stack.isEmpty()) {
+            result.insert(0, "/" + stack.pop());
+        }
+        
+        return result.toString();
+    }
+}
