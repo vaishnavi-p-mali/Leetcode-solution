@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<>();
+        backtrack(result, new ArrayList<>(), s, 0);
+        return result;
+    }
+
+    private void backtrack(List<String> result, List<String> path, String s, int index) {
+        // If we already have 4 parts and consumed all characters → valid IP
+        if (path.size() == 4 && index == s.length()) {
+            result.add(String.join(".", path));
+            return;
+        }
+
+        // If we already have 4 parts but not at end → invalid
+        if (path.size() == 4) return;
+
+        // Try segments of length 1 to 3
+        for (int len = 1; len <= 3; len++) {
+            if (index + len > s.length()) break;
+
+            String segment = s.substring(index, index + len);
+
+            // Validate segment
+            if (isValid(segment)) {
+                path.add(segment);
+                backtrack(result, path, s, index + len);
+                path.remove(path.size() - 1); // backtrack
+            }
+        }
+    }
+
+    private boolean isValid(String segment) {
+        // Leading zero check
+        if (segment.length() > 1 && segment.charAt(0) == '0') return false;
+
+        // Range check
+        int value = Integer.parseInt(segment);
+        return value >= 0 && value <= 255;
+    }
+}
