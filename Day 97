@@ -1,0 +1,21 @@
+class Solution {
+    public int numTrees(int n) {
+        // dp[i] will store the number of unique BSTs with i nodes
+        int[] dp = new int[n + 1];
+        
+        // Base cases
+        dp[0] = 1; // Empty tree
+        dp[1] = 1; // Single node tree
+        
+        // Fill dp array
+        for (int nodes = 2; nodes <= n; nodes++) {
+            for (int root = 1; root <= nodes; root++) {
+                int left = root - 1;          // nodes in left subtree
+                int right = nodes - root;     // nodes in right subtree
+                dp[nodes] += dp[left] * dp[right];
+            }
+        }
+        
+        return dp[n];
+    }
+}
