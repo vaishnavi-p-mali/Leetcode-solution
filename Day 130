@@ -1,0 +1,24 @@
+class PassedStudents
+{
+public static void main(String[]args)
+{
+int sum=0;
+int average=0;
+int count=0;
+int a[][]={{60,70,80},{40,50,60},{30,40,50}};
+for(int i=0;i<a.length;i++)
+{
+for(int j=0;j<a[i].length;j++)
+{
+sum=sum+a[i][j];
+}
+average=sum/(a[i].length);
+sum=0;
+if(average>=50)
+{
+count++;
+}
+}
+System.out.println(count);
+}
+}
