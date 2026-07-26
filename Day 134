@@ -1,0 +1,30 @@
+class Solution {
+    public int minCut(String s) {
+        int n = s.length();
+        // dp[i] will store minimum cuts needed for substring s[0..i]
+        int[] dp = new int[n];
+        // palindrome[i][j] will be true if s[i..j] is a palindrome
+        boolean[][] palindrome = new boolean[n][n];
+        
+        for (int end = 0; end < n; end++) {
+            int minCuts = end; // worst case: cut at every character
+            for (int start = 0; start <= end; start++) {
+                if (s.charAt(start) == s.charAt(end) && 
+                    (end - start <= 2 || palindrome[start + 1][end - 1])) {
+                    
+                    palindrome[start][end] = true;
+                    
+                    // If palindrome starts at 0, no cut needed
+                    if (start == 0) {
+                        minCuts = 0;
+                    } else {
+                        minCuts = Math.min(minCuts, dp[start - 1] + 1);
+                    }
+                }
+            }
+            dp[end] = minCuts;
+        }
+        
+        return dp[n - 1];
+    }
+}
