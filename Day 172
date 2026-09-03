@@ -1,0 +1,32 @@
+import java.util.Stack;
+
+class BSTIterator {
+    private Stack<TreeNode> stack;
+
+    public BSTIterator(TreeNode root) {
+        stack = new Stack<>();
+        pushLeft(root); // initialize stack with leftmost path
+    }
+    
+    // Return the next smallest number
+    public int next() {
+        TreeNode node = stack.pop();
+        if (node.right != null) {
+            pushLeft(node.right);
+        }
+        return node.val;
+    }
+    
+    // Return whether we still have nodes to process
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+    
+    // Helper to push all left children
+    private void pushLeft(TreeNode node) {
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
+        }
+    }
+}
